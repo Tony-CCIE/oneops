@@ -29,6 +29,16 @@ def net_in(hostid: int):
 def net_out(hostid: int):
     return zabbix_info.net_out(hostid)
 
+@app.get("/zabbix/{hostid}/items")
+def host_items(hostid: int):
+    cpu = zabbix_info.cpu_usage(hostid)
+    memory = zabbix_info.memory_usage(hostid)
+    net_in = zabbix_info.net_in(hostid)
+    net_out = zabbix_info.net_out(hostid)
+    items = {"cpu": cpu, "memory": memory, "net_in": net_in, "net_out": net_out}
+    return items
+
+
 @app.get("/redis/slowlog")
 def slowlog():
     return redis_info.slowlog_get()
