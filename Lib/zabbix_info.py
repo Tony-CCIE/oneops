@@ -9,8 +9,8 @@ post_data = {
     "jsonrpc": "2.0",
     "method": "user.login",
     "params": {
-        "user": "shenping",
-        "password": "password@123"
+        "user": "*",
+        "password": "*"
     },
     "id": 1
 }
