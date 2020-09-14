@@ -6,11 +6,11 @@ router = APIRouter()
 
 zb = Zabbix(url='http://10.157.27.56/zabbix/api_jsonrpc.php', user="shenping", password="password@123")
 
-@router.get("/zabbix/host/list/")
+@router.get("/zabbix/host/list/", tags=["zabbix"])
 def host_all():
     return zb.hosts_all()
 
-@router.get("/zabbix/{host_id}/info/")
+@router.get("/zabbix/{host_id}/info/", tags=["zabbix"])
 def host_info(host_id):
     info = {
             "hostname": zb.host(host_id), "ip": zb.ip(host_id),

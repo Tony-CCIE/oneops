@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 import uvicorn
-from resources import redis_data, zabbix_data
+from resources import redis_data, zabbix_data, rabbitmq_data
 
 app = FastAPI()
 app.include_router(zabbix_data.router)
 app.include_router(redis_data.router)
+app.include_router(rabbitmq_data.router)
 
 @app.get("/")
-def read_root():
+def hello_world():
     return {"Hello": "World"}
 
 if __name__ == '__main__':

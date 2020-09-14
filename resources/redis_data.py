@@ -6,6 +6,6 @@ router = APIRouter()
 r = Redis(host="127.0.0.1", port=6379, password="password@123")
 
 
-@router.get("/redis/slowlog/")
+@router.get("/redis/slowlog/", tags=["redis"])
 def redis_slowlog():
     return r.get_slowlog()
