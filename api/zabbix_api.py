@@ -61,15 +61,3 @@ class Zabbix:
 #     print(z1.net_in())
 #     print(z1.net_out())
 
-# @router.get("/zabbix/token/")
-
-# @router.get("/zabbix/host/list/")
-
-# @router.get("/zabbix/{host_id}/cpu/")
-
-# @router.get("/zabbix/{host_id}/memory/")
-
-# @router.get("/zabbix/{host_id}/net_in/")
-
-# @router.get("/zabbix/{host_id}/net_out/")
-
