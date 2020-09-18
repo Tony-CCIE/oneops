@@ -1,4 +1,5 @@
 from pyzabbix import ZabbixAPI
+import time
 
 
 class Zabbix:
@@ -28,10 +29,15 @@ class Zabbix:
         data = self.zb.host.get(output=["ip"], hostids=host_id, selectInterfaces=["ip"])
         return data[0]["interfaces"][0]["ip"]
 
+    def items(self):
+        key_list = ["system.cpu.util[,idle]", "vm.memory.size[available]", "net.if.in[eth0]", "net.if.out[eth0]"]
+        data = self.zb.item.get(output=["host", "ip", "key_", "lastvalue"], hostids=self.id_list(), selectInterfaces=["ip"], filter={"key_": key_list})
+        return data
+
     def cpu_idle(self, host_id):
-        data = self.zb.item.get(output="extend", hostids=host_id, search={"key_": "system.cpu.util[,idle]"})
+        data = self.zb.item.get(output=["host", "key_", "lastvalue"], hostids=host_id, filter={"key_": ["system.cpu.util[,idle]", "vm.memory.size[available]"]})
         if len(data):
-            return (data[0]["lastvalue"])
+            return (data)
         else:
             return "null"
 
@@ -59,12 +65,13 @@ class Zabbix:
 
 if __name__ == "__main__":
     z1 = Zabbix(url='http://10.157.27.56/zabbix/api_jsonrpc.php', user="shenping", password="password@123")
+    print(z1.items())
     # print(z1.hosts_all())
     # print(z1.hostid())
     # print((z1.id_list()))
     # print(z1.ip())
-    print(z1.cpu_idle("10128"))
-    # print(z1.memory_usage())
+    # print(z1.cpu_idle("10209"))
+    # print(z1.memory_usage("10209"))
     # print(z1.net_in())
     # print(z1.net_out())
 
