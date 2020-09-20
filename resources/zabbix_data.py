@@ -3,6 +3,7 @@ from api.zabbix_api import Zabbix
 from queue import Queue
 import threading
 import time
+import asyncio
 
 
 router = APIRouter()
@@ -14,14 +15,6 @@ zb = Zabbix(url='http://10.157.27.56/zabbix/api_jsonrpc.php', user="shenping", p
 def host_all():
     return zb.hosts_all()
 
-@router.get("/zabbix/items/")
-def items():
-    start = time.time()
-    for i in zb.items():
-        print(i)
-    end = time.time()
-    print(end-start)
-    return i
 
 @router.get("/zabbix/{host_id}/info/", tags=["zabbix"])
 def host_info(host_id):
@@ -36,19 +29,12 @@ def host_info(host_id):
     return info
 
 
-# @router.get("/zabbix/ip_cpu/", tags=["zabbix"])
-# def ip_cpu():
-#     start = time.time()
-#     ip_list = []
-#     cpu_list = []
-#     for i in zb.id_list():
-#         ip_list.append(zb.ip(i))
-#         cpu_list.append(zb.cpu_idle(i))
-#     ip_cpu_dict = dict(zip(ip_list, cpu_list))
-#     ip_cpu_sort = dict_sort(ip_cpu_dict, 5)
-#     end = time.time()
-#     print(end-start)
-#     return ip_cpu_sort
+@router.get("/zabbix/ip_cpu/", tags=["zabbix"])
+def ip_cpu():
+    ip_cpu_dict = dict(zip(zb.ip_list(), zb.cpu_idle_list()))
+    ip_cpu_sort = (dict_sort(ip_cpu_dict, 5))
+    new_ip_cpu = [{'ip': i[0], 'cpu': i[1]} for i in ip_cpu_sort.items()]
+    return new_ip_cpu
 
 
 def dict_sort(dict_n, n):
