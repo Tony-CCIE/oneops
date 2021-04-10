@@ -42,6 +42,6 @@ class RabbitMQ:
 
 if __name__ == "__main__":
     ra = RabbitMQ(host_name="127.0.0.1")
-    print(ra.healthchecks_nodes())
+    print(ra.health_checks_nodes())
     print(ra.connections())
     print(ra.list_nodes())
