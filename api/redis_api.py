@@ -24,6 +24,7 @@ class Redis:
 #   connected_clients
 #   used_memory
 
+
 if __name__ == "__main__":
     c = Redis(host="127.0.0.1", port=6379, password="password@123")
     print(c.get_key("hello"))

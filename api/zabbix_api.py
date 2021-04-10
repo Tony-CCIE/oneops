@@ -1,7 +1,5 @@
 from pyzabbix import ZabbixAPI
-import time
-import asyncio
-import aiohttp
+
 
 class Zabbix:
     def __init__(self, url, user, password):

@@ -1,4 +1,3 @@
-
 from urllib import request
 import logging
 import json
@@ -21,9 +20,9 @@ class RabbitMQ:
         logging.debug("Issue a rabbit API call to get data on" + path)
         return json.loads(request.build_opener(handler).open(url).read())
 
-    # /api/healthchecks/node,  Runs basic healthchecks in the current node
-    def healthchecks_nodes(self):
-        status = self.call_api("healthchecks/node")
+    # /api/health_checks/node,  Runs basic health_checks in the current node
+    def health_checks_nodes(self):
+        status = self.call_api("health_checks/node")
         return status
 
     # /api/connections, a list of all open connections
@@ -39,6 +38,7 @@ class RabbitMQ:
     def list_nodes(self):
         node = self.call_api("nodes")
         return node[0]['name']
+
 
 if __name__ == "__main__":
     ra = RabbitMQ(host_name="127.0.0.1")
